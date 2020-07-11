@@ -1,0 +1,10 @@
+@import "fonts";
+@import "vars";
+
+
+h1{
+	color: $mainColor;
+	font-family: 'Cabin';
+}
+
+@import "~bootstrap";
