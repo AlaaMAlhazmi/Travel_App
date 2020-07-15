@@ -7,22 +7,65 @@ html{
 
 header {
 	height: 10vh;
-	background-color: gray;
+	background-color: rgba(86, 101, 115, 0.5);
 	font-family: 'Cabin';
 	font-weight: 500;
-	//color: $mainColor;
-	//font-size: 2em;
+	color: rgb(255, 255, 255);
+	font-size: 1.5em;
 	padding-left: 10vw;
 	padding-right: 10vw;
+
+	a{
+		text-decoration: none;
+		color: white;
+
+		&:hover, &:focus{
+			text-decoration: none;
+			color: white;
+			font-weight: bold;
+
+		}
+	}
+
+	.add-trip-card{
+		border-style: dashed;
+		border-width: 2px;
+	}
+
+
+}
+
+#add-trip{
+	background: url(../assets/imgs/ST_ZoomBackground_Beach01.jpg);
+	background-size: cover;
+	background-position: center;
 }
 
 .input-section{
 	height: calc(100vh - 10vh);
-	background-color: lightblue;
+	//background-color: lightblue;
+}
+
+form {
+	background-color: rgba(240, 128, 128, 0.3);
+	color: rgb(255, 255, 255);
+	font-weight: bold;
+
+	input{
+		background-color: transparent;
+	}
 }
 
 .output-section{
-	background-color: pink;	
+	background-color: rgb(243, 238, 232);
+	.add-trip-card{
+		border-style: dashed;
+		border-width: 4px;
+	}
+}
+
+.add-trip-button{
+	background-color: transparent;
 }
 
 .btn-circle.btn-xl {
@@ -38,12 +81,25 @@ header {
 
 footer {
 	height: 10vh;
-	background-color: gray;
+	background-color: rgba(86, 101, 115, 1);
 	font-family: 'Cabin';
-	//color: $mainColor;
-	font-size: 1em;
+	font-size: 1.2em;
+	font-weight: 700;
 	padding-left: 5vw;
 	padding-right: 5vw;
+
+	a{
+		text-decoration: none;
+
+	}
+
+	.fa-twitter-square:hover{
+		color: rgb(69, 179, 157);
+	}
+
+	.fa-github:hover{
+		color: rgb(69, 179, 157);
+	}
 }
 
 @import "~bootstrap";
