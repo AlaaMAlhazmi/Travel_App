@@ -35,6 +35,11 @@ header {
 
 }
 
+// Prevent button icons from firing events
+button > * {
+  pointer-events: none;
+}
+
 #add-trip{
 	background: url(../assets/imgs/ST_ZoomBackground_Beach01.jpg);
 	background-size: cover;

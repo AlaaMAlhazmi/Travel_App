@@ -24,89 +24,32 @@
 					<form class="col-md-8 col-lg-6 border rounded p-4 m-4">
 						<div class="form-row">
 						    <div class="form-group col-md-6">
-						      <label for="inputCity1">Current Location</label>
-						      <input type="text" class="form-control" id="inputCity1" placeholder="City">
+						      <label for="currentLocation">Current Location</label>
+						      <input type="text" class="form-control" id="currentLocation" placeholder="City">
 						    </div>
 						    <div class="form-group col-md-6">
-						      <label for="inputCity2">Destination/City</label>
-						      <input type="text" class="form-control" id="inputCity2" placeholder="City">
+						      <label for="destLocation">Destination/City</label>
+						      <input type="text" class="form-control" id="destLocation" placeholder="City">
 						    </div>
 						  </div>
 
 						  <div class="form-row">
 						    <div class="form-group col-md-6">
-						      <label for="Date1">Departing</label>
-						      <input type="Date" class="form-control" id="Date1">
+						      <label for="departDate">Departing</label>
+						      <input type="Date" class="form-control" id="departDate">
 						    </div>
 						    <div class="form-group col-md-6">
-						      <label for="Date2">Returning</label>
-						      <input type="Date" class="form-control" id="Date12">
+						      <label for="returnDate">Returning</label>
+						      <input type="Date" class="form-control" id="returnDate">
 						    </div>
 						  </div>
-						  <button type="submit" title="Submit" class="btn btn-danger btn-block">Submit</button>
+						  <button id="form-btn" type="Button" title="Submit" class="btn btn-danger btn-block">Submit</button>
 					</form>
 				</section>
 			</div>
 
 			<section class="output-section" id="my-trips">
-				<div class="all-trips row row-cols-1 row-cols-md-3 p-3 pr-4 pl-4 m-0">
-
-					<div class="col p-3 col-xs-12 col-md-6 col-lg-4">
-						<div class="card h-100">
-			  				<img src="./src/client/assets/imgs/madinah.jpg" class="card-img-top" alt="...">
-			  				<div class="card-body">
-					    		<h3 class="card-title">Medinah, Saudi Arabia</h3>
-					    		<div class="card-text">2020-07-14 - 2020-07-24</div>
-					    		<div class="card-text">Duration: <span><b>3</b></span> days</div>
-					    		<br>
-					    		<div class="row weather-forcast align-items-center">
-					    			<div class="col-12"><h5>Weather Forcast:</h5></div>
-					    			<div class="col-2 text-right p-3"><i class=" text-primary fas fa-cloud-sun fa-2x"></i></div>
-					    			<div class="col-10">
-					    				<div class="temperature"> s91 °C </div>
-					    				<div class="weather-description"> Humid throughout the day</div>
-					    			</div>
-					    		</div>
-				  			</div>
-				  			<div class="row card-footer text-muted m-0 align-items-center">
-				  				<p class="col-10 blockquote-footer m-0">Your trip will start in: <span><b>3</b></span> days</p>
-				  				<button type="button" title="Delete Trip" class="col-2 btn btn-outline-danger"><i class="fas fa-trash-alt fa-1x"></i></button>
-				  			</div>
-						</div>
-					</div>
-
-					<div class="col p-3 col-xs-12 col-md-6 col-lg-4">
-						<div class="card h-100">
-			  				<img src="./src/client/assets/imgs/madinah.jpg" class="card-img-top" alt="...">
-			  				<div class="card-body">
-					    		<h5 class="card-title">Card title</h5>
-					    		<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					    		<p class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></p>
-				  			</div>
-						</div>
-					</div>
-
-					<div class="col p-3 col-xs-12 col-md-6 col-lg-4">
-						<div class="card h-100">
-			  				<img src="./src/client/assets/imgs/madinah.jpg" class="card-img-top" alt="...">
-			  				<div class="card-body">
-					    		<h5 class="card-title">Card title</h5>
-					    		<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					    		<p class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></p>
-				  			</div>
-						</div>
-					</div>
-
-					<div class="col p-3 col-xs-12 col-md-6 col-lg-4">
-						<div class="card h-100">
-			  				<img src="./src/client/assets/imgs/madinah.jpg" class="card-img-top" alt="...">
-			  				<div class="card-body">
-					    		<h5 class="card-title">Card title</h5>
-					    		<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					    		<p class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></p>
-				  			</div>
-						</div>
-					</div>
+				<div class="all-trips row row-cols-1 row-cols-md-3 p-3 pr-4 pl-4 m-0 flex-row-reverse justify-content-end">
 
 					<div class="col p-3 col-xs-12 col-md-6 col-lg-4">
 						<div class="card add-trip-card p-4 h-100 justify-content-center align-items-center">
