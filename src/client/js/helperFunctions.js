@@ -21,6 +21,7 @@ export const smoothScrollTo = (id) =>{
 // Choose Icon specifications set by classes according to the avarge tempreature
 export const tempIconColor = (maxTemp, minTemp)=>{
 
+
 	const iconClasses = ["fas fa-thermometer-quarter", "fas fa-thermometer-half", "fas fa-thermometer-full"];
 	const colorClasses = ['text-info', 'text-warning', 'text-danger'];
 
