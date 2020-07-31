@@ -35,3 +35,5 @@ export const tempIconColor = (maxTemp, minTemp)=>{
 		return ([iconClasses[2], colorClasses[2]])
 	};
 };
+
+//Create a popUp with a msg

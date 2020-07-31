@@ -3,6 +3,8 @@ let todaysDate =  d.getFullYear()+'-'+ (d.getMonth()+1).toLocaleString('en-US', 
 
 const departDateInput = document.getElementById('departDate');
 const returnDateInput = document.getElementById('returnDate');
+const currentCityInput = document.getElementById('currentLocation');
+const destinationCityinput = document.getElementById('destLocation');
 
 
 export const setConstraints = () => {
@@ -15,13 +17,24 @@ export const validateForm = (event)=>{
 
 	const addTripForm = document.querySelector('.needs-validation');
 
-	//Set Validation Rules
+	//Set Return Date Validation Massege
 	if(departDateInput.value !== ""){
 		returnDateInput.setAttribute("min", `${departDateInput.value}`);
 		if(departDateInput.value > returnDateInput.value && returnDateInput.value !== ""){
 			returnDateInput.nextElementSibling.innerHTML = 'Return date should be equal or greater than departure date';
-		}
+		};
 	};
+
+	//Set Current City Validation Massege
+	if(currentCityInput.validity.patternMismatch){
+		currentCityInput.nextElementSibling.innerHTML = 'City name should be longer than 2 and shorter than 85 letters';
+	};
+
+	//Set Destination City Validation Massege
+	if(destinationCityinput.validity.patternMismatch){
+		destinationCityinput.nextElementSibling.innerHTML = 'City name should be longer than 2 and shorter than 85 letters';
+	};
+
 
 	//handling validation
 	if (addTripForm.checkValidity() === false){

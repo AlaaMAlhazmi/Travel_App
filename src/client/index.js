@@ -1,6 +1,12 @@
 //import {} from './js/app.js';
 import "./styles/main.scss";
 import "@fortawesome/fontawesome-free/js/all.js";
+import "./assets/imgs/fallbackImage.jpg";
 import "./assets/imgs/madinah.jpg";
+import "./js/app.js";
 //import "./assets/imgs/ST_ZoomBackground_Beach01.jpg";
-import "./js/app.js"
+// window.jQuery = require('jquery');
+// window.$ = require('jquery');
+// import $ from 'jquery';
+// import 'bootstrap';
+// import 'bootstrap/js/dist/modal.js';

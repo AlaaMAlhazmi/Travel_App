@@ -2,6 +2,8 @@ import {getDestinationInfo, getWeather, getDestinationImg} from './api.js';
 import {addTripCard, deleteTripCard} from './updateUI';
 import {date_diff_indays, smoothScrollTo} from './helperFunctions.js';
 import {validateForm, setConstraints} from './formValidation.js';
+import $ from 'jquery';
+import 'bootstrap/js/dist/modal.js';
 
 //Array that holds all the rtips
 let trips;
@@ -15,7 +17,9 @@ const returnDateInput = document.getElementById('returnDate');
 const getTripInfo = async ()=>{
 
 	let lat, lng;
+	let totalImageHits;
 	let trip = {};
+	let apiCallResultHolder;
 
 	/*{
 		id: "",
@@ -30,51 +34,61 @@ const getTripInfo = async ()=>{
 		duration: ""
 	}*/
 
-	//Id
+	//Create ID by Date/Time when adding the trip
 	trip.id = (Date.now()).toString();
 	//Departure Date
 	trip.departDate = document.getElementById('departDate').value;
 	//Return Date
 	trip.returnDate = document.getElementById('returnDate').value;
+	
 	//Destination City, Destenation Country
-	[lat, lng, trip.destCity, trip.destCountry] = await getDestinationInfo(document.getElementById('destLocation').value);
+	apiCallResultHolder = await getDestinationInfo(document.getElementById('destLocation').value);
+	if(apiCallResultHolder.error){
+		document.querySelector('.modal-text').innerHTML = apiCallResultHolder.error;
+		$('#myModal').modal('show');
+		return null;
+	}else{
+		[lat, lng, trip.destCity, trip.destCountry] = apiCallResultHolder
+	}
+
+
 	//Destination Maximum temperature, Destination Minimum temperature
-	[trip.destMaxTemp, trip.destMinTemp] = await getWeather(lat, lng, new Date(trip.departDate).getMonth());
+	apiCallResultHolder = await getWeather(lat, lng, new Date(trip.departDate).getMonth());
+	if(apiCallResultHolder.error){
+		document.querySelector('.modal-text').innerHTML = apiCallResultHolder.error;
+		$('#myModal').modal('show');
+		console.log(apiCallResultHolder.error);
+		return null;
+	}else{
+		[trip.destMaxTemp, trip.destMinTemp] = apiCallResultHolder;
+	}
+	
 	//Destination Image URL, Destination Image Description
-	[trip.destImgUrl, trip.destImgDesc] = await getDestinationImg(trip.destCity);
+	[totalImageHits, trip.destImgUrl, trip.destImgDesc] = await getDestinationImg(trip.destCity);
+	//Handle no image for city name
+	if(!totalImageHits){
+		[totalImageHits, trip.destImgUrl, trip.destImgDesc] = await getDestinationImg(trip.destCountry);
+	}
+
+
 	//Duration
 	trip.duration = date_diff_indays(trip.departDate, trip.returnDate);
 
+	//Return Trip Info
 	return trip;
 }
 
 //Handle Submit Button click
 const saveTrip = async (event)=>{
 
-	/*const addTripForm = document.querySelector('.needs-validation');
-
-	//Set Validation Rules
-	if(departDateInput.value !== ""){
-		returnDateInput.setAttribute("min", `${departDateInput.value}`);
-		if(departDateInput.value > returnDateInput.value && returnDateInput.value !== ""){
-			returnDateInput.nextElementSibling.innerHTML = 'Return date should be equal or greater than departure date';
-		}
-	};
-
-	//handling validation
-	if (addTripForm.checkValidity() === false){
-		event.preventDefault();
-		event.stopPropagation();
-
-		addTripForm.classList.add('was-validated');
-
-	}*/if(validateForm(event)){
+	if(validateForm(event)){
 
 		//prevent submitting the form
 		event.preventDefault();
 		//object to hold trip info
 		const newTrip = await getTripInfo();
-		// Add trip card to the UI
+		if(newTrip){
+			// Add trip card to the UI
 		addTripCard(newTrip);
 		//Empty form inputs
 		document.querySelector('form').reset();
@@ -86,7 +100,7 @@ const saveTrip = async (event)=>{
 		localStorage.setItem('allTrips', JSON.stringify(trips));
 
 		(document.querySelector('.needs-validation')).classList.remove('was-validated');
-		//returnDateInput.classList.remove('is-invalid');
+		}
 	}
 };
 
