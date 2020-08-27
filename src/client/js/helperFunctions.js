@@ -36,4 +36,20 @@ export const tempIconColor = (maxTemp, minTemp)=>{
 	};
 };
 
-//Create a popUp with a msg
+//lodaing button
+export const loadingToggel = ()=>{
+	const submitBtn = document.getElementById('form-btn');
+
+	if(!submitBtn.classList.contains('loading')){
+		submitBtn.innerHTML=`
+			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			<span class="btn-text">Loading...</span>
+		`;
+		submitBtn.classList.add('loading');
+		
+	} else {
+		submitBtn.innerHTML='Submit';
+		submitBtn.classList.remove('loading');
+	}
+
+}

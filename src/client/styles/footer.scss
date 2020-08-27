@@ -1,0 +1,29 @@
+footer {
+	background-color: #554F4F;
+	font-family: 'Cabin';
+	font-size: 1.2em;
+	font-weight: 700;
+	padding: 1vh 5vw;
+	color:#212529;
+
+	a{
+		text-decoration: none;
+    	color: #212529;
+    	padding: 0rem .5rem;
+
+    	&:hover, &:focus{
+	      text-decoration: none;
+	      color: #3dd0d3;
+	    }
+	}
+
+	.social-buttons {
+	    padding: .5rem .5rem;
+	}
+}
+
+@media (max-width: 576px) {
+  footer {
+    font-size: 1.2em;
+  }
+}

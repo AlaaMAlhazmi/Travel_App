@@ -1,0 +1,33 @@
+header {
+	height: 10vh;
+	background-color: rgba(86, 101, 115, 0.5);
+	font-family: 'Cabin';
+	font-weight: 500;
+	color: rgb(255, 255, 255);
+	font-size: 1.5rem;
+	padding-left: 10vw;
+	padding-right: 10vw;
+
+	a{
+		text-decoration: none;
+		color: white;
+
+		&:hover, &:focus{
+			text-decoration: none;
+			color: white;
+			font-weight: bold;
+
+		}
+	}
+
+	.add-trip-card{
+		border-style: dashed;
+		border-width: 2px;
+	}
+}
+
+@media (max-width: 576px) {
+  header {
+    font-size: 1.2em;
+  }
+}

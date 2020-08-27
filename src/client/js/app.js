@@ -1,7 +1,6 @@
 import "regenerator-runtime/runtime";
-import {getDestinationInfo, getWeather, getDestinationImg} from './api.js';
 import {addTripCard, deleteTripCard} from './updateUI';
-import {date_diff_indays, smoothScrollTo} from './helperFunctions.js';
+import {date_diff_indays, smoothScrollTo, loadingToggel} from './helperFunctions.js';
 import {validateForm, setDateConstraints, setReturnDateConstraints} from './formValidation.js';
 import $ from 'jquery';
 import 'bootstrap/js/dist/modal.js';
@@ -136,6 +135,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 			if(validateForm(event)){
 				//prevent submitting the form
 				event.preventDefault();
+				//add loading
+				loadingToggel();
 				// get trip data user entered in the form
 				const formData = getFormData(event);
 				//get other trip data from APIs
@@ -148,6 +149,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 				smoothScrollTo(tripCompleteInfo.id);
 				//Empty form inputs
 				document.querySelector('form').reset();
+				//remove loading
+				loadingToggel();
 			}	
 		} catch (err) {
 			document.querySelector('.modal-text').innerHTML = err.message;
