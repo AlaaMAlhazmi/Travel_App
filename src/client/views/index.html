@@ -2,14 +2,24 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js');
+            });
+        }
+    </script>
 	<title>Trvel App</title>
 </head>
 <body>
 	<!-- this is a comment -->
 	<div class="container-fluid p-0 m-0">
 		
-
 		<div class="main">
+			
 			<div id="add-trip">
 				<header id="app-header" class="row m-0 align-items-center">
 					<div class="col-6">
@@ -74,9 +84,9 @@
 			</div>
 
 			<section class="output-section" id="my-trips">
-				<div class="all-trips row row-cols-1 row-cols-md-3 p-3 pr-4 pl-4 m-0 flex-row-reverse justify-content-end">
+				<div class="all-trips row row-cols-1 row-cols-md-3 p-3 pr-4 pl-4 m-0 d-flex flex-wrap-reverse justify-content-center">
 
-					<div class="col p-3 col-xs-12 col-md-6 col-lg-4">
+					<div class="col p-3 col-xs-12 col-md-6 col-lg-4 order-first">
 						<div class="card add-trip-card p-4 h-100 justify-content-center align-items-center">
 							<a href="#app-header">
 								<button title="Add Trip" class="btn btn-danger btn-circle btn-xl">

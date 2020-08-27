@@ -7,10 +7,14 @@ const currentCityInput = document.getElementById('currentLocation');
 const destinationCityinput = document.getElementById('destLocation');
 
 
-export const setConstraints = () => {
+export const setDateConstraints = () => {
 	//Set Validation Rules
 	departDateInput.setAttribute("min", `${todaysDate}`);
 	returnDateInput.setAttribute("min", `${todaysDate}`);
+}
+
+export const setReturnDateConstraints = () =>{
+	returnDateInput.setAttribute("min", departDateInput.value);
 }
 
 export const validateForm = (event)=>{
@@ -18,11 +22,8 @@ export const validateForm = (event)=>{
 	const addTripForm = document.querySelector('.needs-validation');
 
 	//Set Return Date Validation Massege
-	if(departDateInput.value !== ""){
-		returnDateInput.setAttribute("min", `${departDateInput.value}`);
-		if(departDateInput.value > returnDateInput.value && returnDateInput.value !== ""){
-			returnDateInput.nextElementSibling.innerHTML = 'Return date should be equal or greater than departure date';
-		};
+	if(departDateInput.value > returnDateInput.value && returnDateInput.value !== ""){
+		returnDateInput.nextElementSibling.innerHTML = 'Return date should be equal or greater than departure date';
 	};
 
 	//Set Current City Validation Massege
@@ -46,6 +47,8 @@ export const validateForm = (event)=>{
 		return false;
 
 	}else{
+		
+		addTripForm.classList.remove('was-validated');
 		return true;
 	}
 }

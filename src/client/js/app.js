@@ -1,7 +1,8 @@
+import "regenerator-runtime/runtime";
 import {getDestinationInfo, getWeather, getDestinationImg} from './api.js';
 import {addTripCard, deleteTripCard} from './updateUI';
 import {date_diff_indays, smoothScrollTo} from './helperFunctions.js';
-import {validateForm, setConstraints} from './formValidation.js';
+import {validateForm, setDateConstraints, setReturnDateConstraints} from './formValidation.js';
 import $ from 'jquery';
 import 'bootstrap/js/dist/modal.js';
 
@@ -13,15 +14,35 @@ let todaysDate =  d.getFullYear()+'-'+ (d.getMonth()+1).toLocaleString('en-US', 
 const departDateInput = document.getElementById('departDate');
 const returnDateInput = document.getElementById('returnDate');
 
-//Set an object with user data for the trip  
-const getTripInfo = async ()=>{
+//Set an object with complete info about the trip (form data + API calls results)  
+const getTripInfo = async (url='', formData={})=>{
 
-	let lat, lng;
-	let totalImageHits;
+	let d = new Date();
+	let todaysDate =  d.getFullYear()+'-'+ (d.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})+'-'+ d.getDate();
+	if(date_diff_indays(todaysDate, formData.departDate) <= 16 ){
+		formData.within16Days = true;
+	} else {
+		formData.within16Days = false;
+	}
+
+	//post entry to server
+	const response = await fetch(url, {
+		method: "POST",
+		body: JSON.stringify(formData),
+		headers:{
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	});
+	
+
+	let data = await response.json();
+	//handle 404 & 500 response
+	if(!response.ok){
+		throw new Error(data.error);
+	}
+
 	let trip = {};
-	let apiCallResultHolder;
-
-	/*{
+		/*{
 		id: "",
 		departDate: "",
 		returnDate: "",
@@ -33,44 +54,13 @@ const getTripInfo = async ()=>{
 		destImgDesc: "",
 		duration: ""
 	}*/
-
+	trip = data;
 	//Create ID by Date/Time when adding the trip
 	trip.id = (Date.now()).toString();
 	//Departure Date
-	trip.departDate = document.getElementById('departDate').value;
+	trip.departDate = formData.departDate;
 	//Return Date
-	trip.returnDate = document.getElementById('returnDate').value;
-	
-	//Destination City, Destenation Country
-	apiCallResultHolder = await getDestinationInfo(document.getElementById('destLocation').value);
-	if(apiCallResultHolder.error){
-		document.querySelector('.modal-text').innerHTML = apiCallResultHolder.error;
-		$('#myModal').modal('show');
-		return null;
-	}else{
-		[lat, lng, trip.destCity, trip.destCountry] = apiCallResultHolder
-	}
-
-
-	//Destination Maximum temperature, Destination Minimum temperature
-	apiCallResultHolder = await getWeather(lat, lng, new Date(trip.departDate).getMonth());
-	if(apiCallResultHolder.error){
-		document.querySelector('.modal-text').innerHTML = apiCallResultHolder.error;
-		$('#myModal').modal('show');
-		console.log(apiCallResultHolder.error);
-		return null;
-	}else{
-		[trip.destMaxTemp, trip.destMinTemp] = apiCallResultHolder;
-	}
-	
-	//Destination Image URL, Destination Image Description
-	[totalImageHits, trip.destImgUrl, trip.destImgDesc] = await getDestinationImg(trip.destCity);
-	//Handle no image for city name
-	if(!totalImageHits){
-		[totalImageHits, trip.destImgUrl, trip.destImgDesc] = await getDestinationImg(trip.destCountry);
-	}
-
-
+	trip.returnDate = formData.returnDate;
 	//Duration
 	trip.duration = date_diff_indays(trip.departDate, trip.returnDate);
 
@@ -78,29 +68,30 @@ const getTripInfo = async ()=>{
 	return trip;
 }
 
+//Get User Data 
+const getFormData = (event)=> {
+	let formData = {};
+
+	//Departure Date
+	formData.departDate = document.getElementById('departDate').value;
+	//Return Date
+	formData.returnDate = document.getElementById('returnDate').value;
+	//Destination City, Destenation Country
+	formData.destCity = document.getElementById('destLocation').value
+
+	return formData
+}
+
 //Handle Submit Button click
-const saveTrip = async (event)=>{
+const saveTrip = (tripCompleteInfo)=>{
 
-	if(validateForm(event)){
-
-		//prevent submitting the form
-		event.preventDefault();
-		//object to hold trip info
-		const newTrip = await getTripInfo();
-		if(newTrip){
-			// Add trip card to the UI
-		addTripCard(newTrip);
-		//Empty form inputs
-		document.querySelector('form').reset();
-		//scroll to the newly added card
-		smoothScrollTo(newTrip.id);
+	//object to hold trip info
+	if(tripCompleteInfo){
 		//add the trip to the arry that holds all the trips
-		trips.push(newTrip);
+		trips.push(tripCompleteInfo);
+		
 		//add All trips to localStorage
 		localStorage.setItem('allTrips', JSON.stringify(trips));
-
-		(document.querySelector('.needs-validation')).classList.remove('was-validated');
-		}
 	}
 };
 
@@ -118,10 +109,13 @@ const removeTrip = (event)=>{
 
 
 ////////////////////// Execution Starts Here /////////////////////////
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', async ()=>{
 
-	//Set Validation Rules
-	setConstraints();
+	//Set Date Validation Rules
+	setDateConstraints();
+
+	//Set Return Date Validation Rule when Depart Date is added
+	document.getElementById('departDate').addEventListener('input', setReturnDateConstraints);
 
 	//Set trips array from localStorage
 	trips = localStorage.getItem('allTrips');
@@ -132,15 +126,36 @@ document.addEventListener('DOMContentLoaded', ()=>{
 		addTripCard(trip);
 	});
 
-	//handle form submit
+	//Handle form submit
 	const form = document.querySelector('.needs-validation');
-	form.addEventListener('submit', saveTrip)
+	form.addEventListener('submit', async (event) =>{
+
+		try{
+
+			//If Form inputs are valid do the following:
+			if(validateForm(event)){
+				//prevent submitting the form
+				event.preventDefault();
+				// get trip data user entered in the form
+				const formData = getFormData(event);
+				//get other trip data from APIs
+				const tripCompleteInfo = await getTripInfo('/tripApiInfo', formData);
+				//save trip to local storage
+				saveTrip(tripCompleteInfo);
+				// Add trip card to the UI
+				addTripCard(tripCompleteInfo);
+				//scroll to the newly added card
+				smoothScrollTo(tripCompleteInfo.id);
+				//Empty form inputs
+				document.querySelector('form').reset();
+			}	
+		} catch (err) {
+			document.querySelector('.modal-text').innerHTML = err.message;
+			$('#myModal').modal('show');
+		}
 		
-
-	//handle submit button click
-	//document.getElementById('form-btn').addEventListener('click', saveTrip);
-
+	})
+		
 	//handle delete button click
 	document.querySelector('.output-section').addEventListener('click', removeTrip);
 });
-

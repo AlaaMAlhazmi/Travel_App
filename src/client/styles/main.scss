@@ -5,13 +5,17 @@ html{
 	scroll-behavior: smooth;
 }
 
+body { font-size: 14px; font-size: 1.4rem; } /* =14px */
+
+h1   { font-size: 24px; font-size: 2.4rem; } /* =24px */
+
 header {
 	height: 10vh;
 	background-color: rgba(86, 101, 115, 0.5);
 	font-family: 'Cabin';
 	font-weight: 500;
 	color: rgb(255, 255, 255);
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	padding-left: 10vw;
 	padding-right: 10vw;
 
@@ -82,13 +86,18 @@ form {
     //line-height: 1.33
 }
 
-
+div > img {
+  width: auto;
+  height : auto;
+  max-height: 100%;
+  max-width: 100%;
+}
 
 footer {
 	height: 10vh;
 	background-color: rgba(86, 101, 115, 1);
 	font-family: 'Cabin';
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	font-weight: 700;
 	padding-left: 5vw;
 	padding-right: 5vw;

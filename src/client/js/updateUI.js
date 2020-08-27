@@ -7,6 +7,31 @@ export const deleteTripCard =  (id) =>{
 
 }
 
+const addFirstDayWeather = (tripInfo) =>{
+	let fisrtDayWeather;
+
+	if(tripInfo.firstDay){
+		fisrtDayWeather = `
+		<div class="row weather-forcast align-items-center pb-4">
+			<div class="col-12"><h5>First Day of The Trip Weather Forcast:</h5></div>
+			<div class="col-4 text-center p-3"><img src=${tripInfo.firstDay.icon}></div>
+			<div class="col-8">
+				<div class="temperature"><span><b>${tripInfo.firstDay.temp}</b> °C</span></div>
+				<div class="weather-description"><span>${tripInfo.firstDay.description}</span></div>
+			</div>
+		</div>`
+	} else {
+		fisrtDayWeather = `
+		<div class="row weather-forcast align-items-center pb-3">
+		<div class="col-12"><h5>First Day of The Trip Weather Forcast:First Day Weather Forcast:</h5></div>
+			<div class="col-10">
+				<div class="temperature text-danger"><span> * This information is only available for trips 16 days away or sooner.</span></div>
+			</div>
+		</div>`
+	}
+	return fisrtDayWeather;
+}
+
 // Add new trip card to UI
 export const addTripCard =  (tripInfo) =>{
 	
@@ -25,8 +50,9 @@ export const addTripCard =  (tripInfo) =>{
 	    		<div class="card-text">${tripInfo.departDate} - ${tripInfo.returnDate}</div>
 	    		<div class="card-text">Duration: <span><b>${tripInfo.duration}</b></span> days</div>
 	    		<br>
-	    		<div class="row weather-forcast align-items-center">
-	    			<div class="col-12"><h5>Weather Forcast:</h5></div>
+	    		${addFirstDayWeather(tripInfo)}
+	    		<div class="row weather-forcast align-items-center pb-3">
+	    			<div class="col-12"><h5>First Month of The Trip Weather Forcast:</h5></div>
 	    			<div class="col-2 text-center p-3"><i class="${tempIconColorClasses[0]} ${tempIconColorClasses[1]} fa-2x"></i></div>
 	    			<div class="col-10">
 	    				<div class="Max-temperature"> Average High Temp <span><b>${tripInfo.destMaxTemp}</b></span> °C</div>
