@@ -153,6 +153,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 				loadingToggel();
 			}	
 		} catch (err) {
+			loadingToggel();
 			document.querySelector('.modal-text').innerHTML = err.message;
 			$('#myModal').modal('show');
 		}
