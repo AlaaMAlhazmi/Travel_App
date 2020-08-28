@@ -55,4 +55,3 @@ test('Check validateForm able add was-validated to form', () => {
 
   expect(inputForm.classList.contains('was-validated')).toBeTruthy();
 });
-

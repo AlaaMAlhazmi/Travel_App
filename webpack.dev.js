@@ -9,8 +9,7 @@ module.exports = merge(common, {
     devtool: false,
         devServer: {
         proxy: {
-            "/tripApiInfo": "http://localhost:3000",
-            "/hello": "http://localhost:3000"
+            "/tripApiInfo": "http://localhost:3000"
         }
     },
     output: {

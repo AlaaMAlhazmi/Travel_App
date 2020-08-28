@@ -71,4 +71,3 @@ export const addTripCard =  (tripInfo) =>{
 
 	allTripsRow.appendChild(newTripCol);
 };
-

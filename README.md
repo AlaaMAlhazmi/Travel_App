@@ -34,9 +34,9 @@ This project is a travel planner app that help you plan your next trip. It obtai
 ## Instructions for Running the Site
 
 1. Clone the repo or download the files.
-2. Replace the API KEYS
-3. Run the command "node server.js" in the server folder. 
-4. Run the command "npm run build".
+2. Replace the API keys and install dependencies.
+3. Run the command "npm run build-prod" in the root.
+4. Run the command "npm run start" in the root.  
 5. The server should start on http://localhost:3000.
 
 ## Project live link

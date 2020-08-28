@@ -4,9 +4,10 @@
   "description": "capstone project\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Udacity FEND Capstone",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js --open",
-    "build": "webpack --config webpack.prod.js",
-    "test": "jest  --watch --coverage"
+    "build-dev": "webpack-dev-server --config webpack.dev.js --open",
+    "build-prod": "webpack --config webpack.prod.js",
+    "test": "jest  --watch --coverage",
+    "start": "node ./src/server/server.js"
   },
   "author": "Alaa Alhazmi",
   "license": "ISC",

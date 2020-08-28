@@ -14,12 +14,14 @@ const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 
 // Initialize the main project folder
-app.use(express.static('dist'));
+// app.use(express.static('dist'));
+app.use(express.static('../../dist'))
 app.use(bodyParser.json());
 
 
 app.get('/', function (req, res){
-	res.sendFile('dist/index.html');
+	// res.sendFile('dist/index.html');
+	res.sendFile(path.resolve('../../dist/index.html'))
 })
 
 app.post('/tripApiInfo', async (req, res) =>{
